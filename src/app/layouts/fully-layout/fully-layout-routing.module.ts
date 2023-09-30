@@ -5,8 +5,15 @@ import { FullyLayoutComponent } from './fully-layout.component';
 const routes: Routes = [
     {
         path: '',
-        component: FullyLayoutComponent,        
-    }
+        component: FullyLayoutComponent,
+        children: [
+          {
+            path: 'app',
+            loadChildren: () => import('../../core/core.module').then(m => m.CoreModule)
+          }
+        ]
+    },
+    
 ];
 
 @NgModule({
