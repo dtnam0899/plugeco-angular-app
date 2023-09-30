@@ -1,1 +1,22 @@
-<p>fully-layout working</p>
+<div class="wrapper">
+    <app-header/>
+
+    <app-sidebar/>
+
+    <div class="content-wrapper">
+        
+        <div class="content-header"></div>
+
+        <div class="content">
+          <div class="container-fluid">
+                 <router-outlet></router-outlet>
+          </div>      
+        </div>
+      
+    </div>
+
+    <app-config-sidebar/>
+
+    <app-footer/>
+</div>
+

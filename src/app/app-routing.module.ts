@@ -5,8 +5,13 @@ import { FullyLayoutComponent } from './layouts/fully-layout/fully-layout.compon
 
 const routes: Routes = [
     {
-        path: '',
-        component: FullyLayoutComponent,
+      path: '',
+      redirectTo: '',
+      pathMatch: 'full'
+    },
+    {
+      path: '',
+      loadChildren: () => import('./layouts/fully-layout/fully-layout.module').then(m => m.FullyLayoutModule)
     },
     {
       path: 'dummy',
