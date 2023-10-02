@@ -4,6 +4,8 @@ import { BuilderRoutingModule } from './builder-routing.module';
 import { AppSharedModule } from 'src/app/shared/shared.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DevExtremeModule, DxCheckBoxModule, DxNumberBoxModule, DxSelectBoxModule, DxTextBoxModule } from 'devextreme-angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Service } from './demo.service';
 
 @NgModule({
   declarations: [
@@ -17,8 +19,11 @@ import { DevExtremeModule, DxCheckBoxModule, DxNumberBoxModule, DxSelectBoxModul
     DxTextBoxModule,
     DxNumberBoxModule,
     DxCheckBoxModule,
-    DxSelectBoxModule
+    DxSelectBoxModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  exports: []
+  exports: [],
+  providers:[Service]
 })
 export class BuilderModule { }
