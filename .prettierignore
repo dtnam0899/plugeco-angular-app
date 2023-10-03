@@ -1,0 +1,20 @@
+# NPM
+package-lock.json
+yarn.lock
+node_modules
+
+# Angular
+assets/js
+.angular
+dist
+
+<!-- # Husky
+.husky -->
+
+# Editor
+.vscode
+<!-- 
+# Storybook
+storybook-static
+documentation.json -->
+# any other unwanted files or folders

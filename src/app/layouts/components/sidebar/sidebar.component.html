@@ -32,8 +32,8 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">  
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li class="nav-item menu-open">
+            <a class="nav-link">
               <i class="nav-icon fa fa-tasks"></i>
               <p>
                 Forms
@@ -42,15 +42,21 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.html" class="nav-link">
+                <a routerLink="/app/cms/forms" class="nav-link">
                   <i class="fas fa-list nav-icon"></i>
                   <p>Form List</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
+                <a routerLink="/app/cms/forms/builder" class="nav-link">
                   <i class="fa fa-wrench nav-icon"></i>
                   <p>Form Builder</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="/app/cms/forms/view" class="nav-link">
+                  <i class="fa fa-eye nav-icon"></i>
+                  <p>Form View</p>
                 </a>
               </li>
             </ul>
