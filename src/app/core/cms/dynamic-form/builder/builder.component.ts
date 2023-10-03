@@ -6,7 +6,7 @@ import {
   CdkDrag,
   CdkDropList,
 } from '@angular/cdk/drag-drop';
-import { Company, Service } from './demo.service';
+import { Employee, Service } from './demo.service';
 
 @Component({
   selector: 'app-builder',
@@ -18,40 +18,67 @@ export class BuilderComponent {
 
   done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
 
-  companies: Company[];
-  
-  labelMode: string;
+  employee: Employee;
 
-  labelLocation: string;
+  isHomeAddressVisible: boolean;
 
-  readOnly: boolean;
+  checkBoxOptions: any;
 
-  showColon: boolean;
+  phoneOptions: any[] = [];
 
-  minColWidth: number;
-
-  colCount: number;
-
-  width: any;
+  addPhoneButtonOptions: any;
 
   constructor(service: Service) {
-    debugger
-    this.labelMode = 'floating';
-    this.labelLocation = 'left';
-    this.readOnly = false;
-    this.showColon = true;
-    this.minColWidth = 300;
-    this.colCount = 2;
-    this.companies = service.getCompanies();
+    this.employee = service.getEmployee();
+    this.isHomeAddressVisible = true;
 
-    console.log(service.getCompanies())
+    this.phoneOptions = this.getPhonesOptions(this.employee.Phones);
 
+    this.checkBoxOptions = {
+      text: 'Show Address',
+      value: true,
+      onValueChanged: (e: any) => {
+        this.isHomeAddressVisible = e.component.option('value');
+      },
+    };
+
+    this.addPhoneButtonOptions = {
+      icon: 'add',
+      text: 'Add phone',
+      onClick: () => {
+        this.employee.Phones.push('');
+        this.phoneOptions = this.getPhonesOptions(this.employee.Phones);
+      },
+    };
   }
 
-  getCompanySelectorLabelMode() {
-    return this.labelMode === 'outside'
-      ? 'hidden'
-      : this.labelMode;
+  ngAfterViewInit(): void {}
+
+  getPhonesOptions(phones: any) {
+    const options = [];
+    for (let i = 0; i < phones.length; i++) {
+      options.push(this.generateNewPhoneOptions(i));
+    }
+    return options;
+  }
+
+  generateNewPhoneOptions(index: number) {
+    return {
+      mask: '+1 (X00) 000-0000',
+      maskRules: { X: /[01-9]/ },
+      buttons: [{
+        name: 'trash',
+        location: 'after',
+        options: {
+          stylingMode: 'text',
+          icon: 'trash',
+          onClick: () => {
+            this.employee.Phones.splice(index, 1);
+            this.phoneOptions = this.getPhonesOptions(this.employee.Phones);
+          },
+        },
+      }],
+    };
   }
 
   drop(event: CdkDragDrop<string[]>) {
