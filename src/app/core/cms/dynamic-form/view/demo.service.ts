@@ -12,25 +12,6 @@ export class Employee {
   Phones: string[];
 }
 
-export class Column {
-  Order: number;
-}
-
-export class FormColumn {
-  Columns: Column[];
-}
-
-const formColumn : FormColumn = {
-  Columns: [
-    {
-      Order: 1
-    },
-    {
-      Order: 2
-    }
-  ]
-}
-
 const employee : Employee = {
   FirstName: 'John',
   LastName: 'Heart',
@@ -43,8 +24,5 @@ const employee : Employee = {
 export class Service {
   getEmployee() : Employee {
     return employee;
-  }
-  getFormColumn() : FormColumn {
-    return formColumn;
   }
 }

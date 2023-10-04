@@ -6,7 +6,7 @@ import {
   CdkDrag,
   CdkDropList,
 } from '@angular/cdk/drag-drop';
-import { Employee, Service } from './demo.service';
+import { Employee, FormColumn, Service } from './demo.service';
 
 @Component({
   selector: 'app-builder',
@@ -20,6 +20,8 @@ export class BuilderComponent {
 
   employee: Employee;
 
+  formColumn: FormColumn;
+
   isHomeAddressVisible: boolean;
 
   checkBoxOptions: any;
@@ -28,12 +30,17 @@ export class BuilderComponent {
 
   addPhoneButtonOptions: any;
 
+  columnCount: number = 1;
+
   constructor(service: Service) {
     this.employee = service.getEmployee();
+    this.formColumn = service.getFormColumn();
+
     this.isHomeAddressVisible = true;
 
     this.phoneOptions = this.getPhonesOptions(this.employee.Phones);
-
+    this.columnCount = this.getColumnCount();
+    console.log(this.columnCount)
     this.checkBoxOptions = {
       text: 'Show Address',
       value: true,
@@ -62,6 +69,10 @@ export class BuilderComponent {
     return options;
   }
 
+  getColumnCount(){
+    return this.formColumn.Columns.length;
+  }
+
   generateNewPhoneOptions(index: number) {
     return {
       mask: '+1 (X00) 000-0000',
@@ -82,6 +93,7 @@ export class BuilderComponent {
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    console.log(event)
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
