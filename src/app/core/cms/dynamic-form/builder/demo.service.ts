@@ -13,6 +13,7 @@ export class Employee {
 }
 
 export class Column {
+  Id: string;
   Order: number;
 }
 
@@ -23,9 +24,11 @@ export class FormColumn {
 const formColumn : FormColumn = {
   Columns: [
     {
+      Id: "g1",
       Order: 1
     },
     {
+      Id: "g2",
       Order: 2
     }
   ]

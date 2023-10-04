@@ -25,21 +25,15 @@
       <h3>Personal details</h3>
     </div>
     <div id="form-container">
-      <dx-form id="form" [colCount]="columnCount" [formData]="employee">
-        <dxi-item dataField="FirstName"></dxi-item>
-        <dxi-item dataField="LastName"></dxi-item>
-        <dxi-item editorType="dxCheckBox" [editorOptions]="checkBoxOptions"></dxi-item>
-        <!-- <dxi-item itemType="group">
-              <dxi-item
-                itemType="group"
-                caption="Home Address"
-                name="HomeAddress"
-                [visible]="isHomeAddressVisible"
-              >
-                <dxi-item dataField="Address"></dxi-item>
-                <dxi-item dataField="City"></dxi-item>
-              </dxi-item>
-            </dxi-item> -->
+      <dx-form id="form" [colCount]="columnCount" [formData]="employee" labelMode="floating">
+
+        <dxi-item [id]="colum.Id" *ngFor="let colum of formColumn.Columns" itemType="group">
+          <dxi-item dataField="FirstName"></dxi-item>
+          <dxi-item dataField="LastName"></dxi-item>
+          <dxi-item editorType="dxCheckBox" [editorOptions]="checkBoxOptions"></dxi-item>
+        </dxi-item>
+
+
         <!-- <dxi-item itemType="group" caption="Phones" name="phones-container">
             <dxi-item
               itemType="group"
