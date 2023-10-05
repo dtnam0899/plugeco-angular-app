@@ -6,6 +6,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DevExtremeModule, DxCheckBoxModule, DxNumberBoxModule, DxSelectBoxModule, DxTextBoxModule } from 'devextreme-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Service } from './demo.service';
+import { PTextBoxModule } from '../form-items/p-text-box/p-text-box.module';
+import { PNumberBoxModule } from '../form-items/p-number-box/p-number-box.module';
 
 @NgModule({
   declarations: [
@@ -16,12 +18,12 @@ import { Service } from './demo.service';
     AppSharedModule,
     DragDropModule,
     DevExtremeModule,
-    DxTextBoxModule,
-    DxNumberBoxModule,
     DxCheckBoxModule,
     DxSelectBoxModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PTextBoxModule,
+    PNumberBoxModule
   ],
   exports: [],
   providers:[Service]

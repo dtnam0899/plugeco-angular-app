@@ -6,7 +6,7 @@ import {
   CdkDrag,
   CdkDropList,
 } from '@angular/cdk/drag-drop';
-import { Employee, FormColumn, Service } from './demo.service';
+import { Employee, FieldTypeList, FormColumn, FormField, Service } from './demo.service';
 
 @Component({
   selector: 'app-builder',
@@ -22,6 +22,8 @@ export class BuilderComponent {
 
   formColumn: FormColumn;
 
+  fieldTypeList: FieldTypeList;
+
   isHomeAddressVisible: boolean;
 
   checkBoxOptions: any;
@@ -35,7 +37,8 @@ export class BuilderComponent {
   constructor(service: Service) {
     this.employee = service.getEmployee();
     this.formColumn = service.getFormColumn();
-
+    this.fieldTypeList = service.getFieldTypeList();
+console.log(this.formColumn)
     this.isHomeAddressVisible = true;
 
     this.phoneOptions = this.getPhonesOptions(this.employee.Phones);
@@ -92,8 +95,9 @@ export class BuilderComponent {
     };
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<FormField[]>) {
     console.log(event)
+    console.log(this.done)
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -103,6 +107,8 @@ export class BuilderComponent {
         event.previousIndex,
         event.currentIndex,
       );
+
+      console.log(this.done)
     }
   }
 }

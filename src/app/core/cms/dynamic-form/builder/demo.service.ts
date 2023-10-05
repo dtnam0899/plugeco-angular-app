@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Field } from 'devextreme/ui/filter_builder';
 
 export class Employee {
   FirstName: string;
@@ -15,21 +16,63 @@ export class Employee {
 export class Column {
   Id: string;
   Order: number;
+  Fields: FormField[];
+  Links: string[];
+}
+
+export class FieldType {
+  Code: string;
+}
+
+export class FormField {
+  Type: string;
 }
 
 export class FormColumn {
+  DropZone: string[];
   Columns: Column[];
 }
 
+export class FieldTypeList {
+  Types: string[];
+}
+
+const fieldTypeList: FieldTypeList = {
+  Types: [ "TextBox", "NumberBox"]
+}
+
 const formColumn : FormColumn = {
+  DropZone: ["g1","g2"],
   Columns: [
     {
       Id: "g1",
-      Order: 1
+      Order: 1,
+      Fields: [
+        {
+          Type: "TextBox"
+        },
+        {
+          Type: "TextBox"
+        }
+      ],
+      Links:[
+        "g2"
+      ]
     },
     {
       Id: "g2",
-      Order: 2
+      Order: 2,
+      Fields: [
+        {
+          Type: "TextBox"
+        },
+        {
+          Type: "NumberBox"
+        }
+      ],
+      Links:[
+        "g1"
+      ]
     }
   ]
 }
@@ -49,5 +92,8 @@ export class Service {
   }
   getFormColumn() : FormColumn {
     return formColumn;
+  }
+  getFieldTypeList():FieldTypeList {
+    return fieldTypeList;
   }
 }
