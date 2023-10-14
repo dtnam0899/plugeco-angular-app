@@ -22,14 +22,6 @@
   font-size: 14px;
 }
 
-.margin-10 {
-  margin-right: 10px;
-}
-
-.margin-10:last-child {
-  margin-right: 0px;
-}
-
 .cdk-drag-preview {
   box-sizing: border-box;
   border-radius: 4px;
@@ -42,17 +34,11 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.field-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-
-
-::ng-deep #form-container {
+#form-container {
   margin: 10px 10px 30px;
 }
 
-::ng-deep .form-title h3 {
+.form-title h3 {
   font-family: 'Segoe UI Light', 'Helvetica Neue Light', 'Segoe UI', 'Helvetica Neue', 'Trebuchet MS', Verdana;
   font-weight: 200;
   font-size: 28px;
@@ -60,34 +46,22 @@
   margin-bottom: 20px;
 }
 
-.form-field-list.cdk-drop-list-dragging .form-field-box:not(.cdk-drag-placeholder) {
+.form-field-list.cdk-drop-list-dragging.form-field-box:not(.cdk-drag-placeholder.form-field-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.form-field-placeholder {
+.cdk-drag-placeholder.form-field-placeholder {
+  // opacity: 0.5;
   background: #ccc;
   border: dotted 3px #999;
   height: 30px;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.field-list.cdk-drop-list-dragging .field-box:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+.form-field-list {
+ 
 }
 
-.field-placeholder {
-  padding: 10px;
-  background: #ccc;
-  border: solid 1px #999;
-  
-  min-width: 150px;
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-::ng-deep .form-field-list {
-  
-}
-
-::ng-deep .form-field-box {
+.form-field-box {
   
 }

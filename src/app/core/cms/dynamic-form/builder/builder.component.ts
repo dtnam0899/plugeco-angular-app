@@ -40,6 +40,7 @@ export class BuilderComponent {
   }
 
   drop(event: CdkDragDrop<FormField[]>) {
+    debugger
     if(event.previousContainer.id == "fields") {
       copyArrayItem(
         event.previousContainer.data,

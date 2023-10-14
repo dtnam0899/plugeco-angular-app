@@ -1,28 +1,19 @@
 <div class="row">
   <div class="field-container col-md-12">
-    <div id="fields" class="field-list flex flex_row flex_left" cdkDropList [cdkDropListData]="fieldTypeList.Fields"
-      [cdkDropListConnectedTo]="formColumn.DropZone" 
-      (cdkDropListExited)="onFieldExited($event)"
+    <div id="fields" class="field-list flex flex-row flex-left flex-gap-10" cdkDropList [cdkDropListData]="fieldTypeList.Fields"
+      [cdkDropListConnectedTo]="formColumn.DropZone" (cdkDropListExited)="onFieldExited($event)"
       (cdkDropListEntered)="onFieldEntered($event)">
-      <div class="margin-10" *ngFor="let item of fieldTypeList.Fields" cdkDrag [cdkDragData]="item">
-        
-        <!-- <div class="field-box margin-10 field-placeholder" *cdkDragFieldPlaceholder>
-          <div class="flex flex_row flex_center">
-            <i class="field-icon"></i>
-            <span class="field-name">{{item.Type}}</span>
+   
+        <ng-template class="margin-10" ngFor let-item [ngForOf]="fieldTypeList.Fields">
+          <div class="field-box" cdkDrag [cdkDragData]="item">
+            <div class="flex flex-row flex-center">
+              <i class="field-icon"></i>
+              <span class="field-name">{{item.Type}}</span>
+            </div>
           </div>
-          
-        </div> -->
-        
-        
-        <div class="field-box" >
-          <div class="flex flex_row flex_center">
-            <i class="field-icon"></i>
-          <span class="field-name">{{item.Type}}</span>
-          </div>
-        </div>
-       
-      </div>
+         
+        </ng-template>
+  
     </div>
   </div>
 </div>
@@ -37,18 +28,18 @@
         <ng-template ngFor let-column [ngForOf]="formColumn.Columns">
           <dxi-item cdkDropListGroup [id]="column.Id" itemType="group">
             <div cdkDropList [id]="column.Id" [cdkDropListData]="column.Fields" [cdkDropListConnectedTo]="column.Links"
-              (cdkDropListDropped)="drop($event)">
-              <ng-template ngFor let-item [ngForOf]="column.Fields" class="form-field-list">
+              (cdkDropListDropped)="drop($event)" class="form-field-list">
+              <ng-template ngFor let-item [ngForOf]="column.Fields">
                 <div class="form-field-box" cdkDrag [cdkDragData]="item">
                   <div class="form-field-placeholder" *cdkDragPlaceholder></div>
-                    <p-text-box *ngIf="item.Type == 'TextBox'">
-                    </p-text-box>
-                    <p-number-box *ngIf="item.Type == 'NumberBox'">
-                    </p-number-box>
-               
+                  <p-text-box *ngIf="item.Type == 'TextBox'">
+                  </p-text-box>
+                  <p-number-box *ngIf="item.Type == 'NumberBox'">
+                  </p-number-box>
+
                 </div>
               </ng-template>
-              
+
             </div>
           </dxi-item>
         </ng-template>
