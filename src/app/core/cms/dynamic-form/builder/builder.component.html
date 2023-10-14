@@ -1,58 +1,57 @@
 <div class="row">
-  <div class="example-container col-md-12">
-    <h2>To do</h2>
-
-    <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="fieldTypeList.Types" [cdkDropListConnectedTo]="formColumn.DropZone"
-      class="example-list" >
-      <div class="example-box" *ngFor="let item of fieldTypeList.Types" cdkDrag>{{item}}</div>
+  <div class="field-container col-md-12">
+    <div id="fields" class="field-list flex flex_row flex_left" cdkDropList [cdkDropListData]="fieldTypeList.Fields"
+      [cdkDropListConnectedTo]="formColumn.DropZone" 
+      (cdkDropListExited)="onFieldExited($event)"
+      (cdkDropListEntered)="onFieldEntered($event)">
+      <div class="margin-10" *ngFor="let item of fieldTypeList.Fields" cdkDrag [cdkDragData]="item">
+        
+        <!-- <div class="field-box margin-10 field-placeholder" *cdkDragFieldPlaceholder>
+          <div class="flex flex_row flex_center">
+            <i class="field-icon"></i>
+            <span class="field-name">{{item.Type}}</span>
+          </div>
+          
+        </div> -->
+        
+        
+        <div class="field-box" >
+          <div class="flex flex_row flex_center">
+            <i class="field-icon"></i>
+          <span class="field-name">{{item.Type}}</span>
+          </div>
+        </div>
+       
+      </div>
     </div>
   </div>
-
 </div>
 
 <div class="row">
   <div class="col-md-12">
-    <div class="long-title">
+    <div class="form-title">
       <h3>Personal details</h3>
     </div>
     <div id="form-container">
       <dx-form id="form" [colCount]="columnCount" [formData]="employee" labelMode="floating">
         <ng-template ngFor let-column [ngForOf]="formColumn.Columns">
-          <dxi-item [id]="column.Id" itemType="group">
-            <div cdkDropList [id]="column.Id" [cdkDropListData]="column.Fields" [cdkDropListConnectedTo]="column.Links" (cdkDropListDropped)="drop($event)">
-              <div *ngFor="let item of column.Fields" cdkDrag>
-                  <p-text-box *ngIf="item.Type == 'TextBox'">
-                  </p-text-box>        
-                  <p-number-box *ngIf="item.Type == 'NumberBox'">
-                  </p-number-box>               
-              </div>
+          <dxi-item cdkDropListGroup [id]="column.Id" itemType="group">
+            <div cdkDropList [id]="column.Id" [cdkDropListData]="column.Fields" [cdkDropListConnectedTo]="column.Links"
+              (cdkDropListDropped)="drop($event)">
+              <ng-template ngFor let-item [ngForOf]="column.Fields" class="form-field-list">
+                <div class="form-field-box" cdkDrag [cdkDragData]="item">
+                  <div class="form-field-placeholder" *cdkDragPlaceholder></div>
+                    <p-text-box *ngIf="item.Type == 'TextBox'">
+                    </p-text-box>
+                    <p-number-box *ngIf="item.Type == 'NumberBox'">
+                    </p-number-box>
+               
+                </div>
+              </ng-template>
+              
             </div>
           </dxi-item>
         </ng-template>
-
-
-
-        <!-- <dxi-item itemType="group" caption="Phones" name="phones-container">
-            <dxi-item
-              itemType="group"
-              name="phones"
-              *ngFor="let phone of phoneOptions; let i = index"
-            >
-              <dxi-item
-                [dataField]="'Phones[' + i + ']'"
-                [editorOptions]="phoneOptions[i]"
-              >
-                <dxo-label [text]="'Phone ' + (i + 1)"> </dxo-label>
-              </dxi-item>
-            </dxi-item>
-            <dxi-item
-              itemType="button"
-              horizontalAlignment="left"
-              cssClass="add-phone-button"
-              [buttonOptions]="addPhoneButtonOptions"
-            >
-            </dxi-item>
-          </dxi-item> -->
       </dx-form>
     </div>
   </div>

@@ -23,7 +23,8 @@ import { PNumberBoxModule } from '../form-items/p-number-box/p-number-box.module
     FormsModule,
     ReactiveFormsModule,
     PTextBoxModule,
-    PNumberBoxModule
+    PNumberBoxModule,
+    
   ],
   exports: [],
   providers:[Service]

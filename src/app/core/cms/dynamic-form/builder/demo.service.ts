@@ -20,10 +20,6 @@ export class Column {
   Links: string[];
 }
 
-export class FieldType {
-  Code: string;
-}
-
 export class FormField {
   Type: string;
 }
@@ -34,15 +30,22 @@ export class FormColumn {
 }
 
 export class FieldTypeList {
-  Types: string[];
+  Fields: FormField[];
 }
 
 const fieldTypeList: FieldTypeList = {
-  Types: [ "TextBox", "NumberBox"]
+  Fields: [
+    {
+      Type: "TextBox"
+    },
+    {
+      Type: "NumberBox"
+    }
+  ]
 }
 
-const formColumn : FormColumn = {
-  DropZone: ["g1","g2"],
+const formColumn: FormColumn = {
+  DropZone: ["g1", "g2"],
   Columns: [
     {
       Id: "g1",
@@ -55,7 +58,7 @@ const formColumn : FormColumn = {
           Type: "TextBox"
         }
       ],
-      Links:[
+      Links: [
         "g2"
       ]
     },
@@ -70,14 +73,14 @@ const formColumn : FormColumn = {
           Type: "NumberBox"
         }
       ],
-      Links:[
+      Links: [
         "g1"
       ]
     }
   ]
 }
 
-const employee : Employee = {
+const employee: Employee = {
   FirstName: 'John',
   LastName: 'Heart',
   Address: '351 S Hill St., Los Angeles, CA',
@@ -87,13 +90,13 @@ const employee : Employee = {
 
 @Injectable()
 export class Service {
-  getEmployee() : Employee {
+  getEmployee(): Employee {
     return employee;
   }
-  getFormColumn() : FormColumn {
+  getFormColumn(): FormColumn {
     return formColumn;
   }
-  getFieldTypeList():FieldTypeList {
+  getFieldTypeList(): FieldTypeList {
     return fieldTypeList;
   }
 }
