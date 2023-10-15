@@ -3,9 +3,13 @@ import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
-  CdkDrag,
-  CdkDropList,
+  copyArrayItem,
+  CdkDragExit,
+  CdkDragEnter
 } from '@angular/cdk/drag-drop';
+import { Employee, FieldTypeList, FormColumn, FormField, Service } from './demo.service';
+import remove from 'lodash-es/remove';
+import { ListIteratee } from 'lodash';
 
 @Component({
   selector: 'app-builder',
@@ -13,43 +17,69 @@ import {
   styleUrls: ['./builder.component.scss']
 })
 export class BuilderComponent {
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
+  employee: Employee;
 
-  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
+  formColumn: FormColumn;
 
-  labelMode: string;
+  fieldTypeList: FieldTypeList;
 
-  labelLocation: string;
+  columnCount: number = 1;
 
-  readOnly: boolean;
+  constructor(service: Service) {
+    this.employee = service.getEmployee();
+    this.formColumn = service.getFormColumn();
+    this.fieldTypeList = service.getFieldTypeList();
+    this.columnCount = this.getColumnCount();
 
-  showColon: boolean;
-
-  minColWidth: number;
-
-  colCount: number;
-
-  width: any;
-
-  constructor() {
-    this.labelMode = 'floating';
-    this.labelLocation = 'left';
-    this.readOnly = false;
-    this.showColon = true;
-    this.minColWidth = 300;
-    this.colCount = 2;
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
+  ngAfterViewInit(): void {}
+
+  getColumnCount(){
+    return this.formColumn.Columns.length;
+  }
+
+  drop(event: CdkDragDrop<FormField[]>) {
+    debugger
+    if(event.previousContainer.id == "fields") {
+      copyArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+      if (event.previousContainer.data) {
+        let  fields : ListIteratee<FormField[]> = this.fieldTypeList.Fields;
+        remove(fields, { markDragged : true });
+      }
+      return;
+    }
+    
+    if (event.previousContainer === event.container) {     
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
+    }
+    else{
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex,
       );
-    }
+    }   
+  }
+
+  onFieldExited(event: CdkDragExit<any>) {
+    let itemIndex = event.container._dropListRef.getItemIndex(event.item._dragRef);
+    let deleteCount = 0;
+    let item = {...event.item.data, markDragged: true};
+    
+    this.fieldTypeList.Fields.splice(itemIndex + 1 , deleteCount, item);
+  }
+
+  onFieldEntered(event: CdkDragEnter<any>) {
+    let  fields : ListIteratee<FormField[]> = this.fieldTypeList.Fields;
+    remove(fields, { markDragged : true });
   }
 }
+
+

@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+.flex {
+    display: flex;
+
+    &-row {
+        flex-direction: row;
+    }
+
+    &-left {
+        align-items: center;
+        justify-content: left;
+    }
+
+    &-center {
+        align-items: center;
+        justify-content: center;
+    }
+
+    &-gap-10 {
+        gap: 10px;
+
+    }
+}
