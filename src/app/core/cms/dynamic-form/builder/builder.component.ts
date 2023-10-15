@@ -3,10 +3,13 @@ import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
-  CdkDrag,
-  CdkDropList,
+  copyArrayItem,
+  CdkDragExit,
+  CdkDragEnter
 } from '@angular/cdk/drag-drop';
-import { Employee, FormColumn, Service } from './demo.service';
+import { Employee, FieldTypeList, FormColumn, FormField, Service } from './demo.service';
+import remove from 'lodash-es/remove';
+import { ListIteratee } from 'lodash';
 
 @Component({
   selector: 'app-builder',
@@ -14,95 +17,69 @@ import { Employee, FormColumn, Service } from './demo.service';
   styleUrls: ['./builder.component.scss']
 })
 export class BuilderComponent {
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
-
-  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
-
   employee: Employee;
 
   formColumn: FormColumn;
 
-  isHomeAddressVisible: boolean;
-
-  checkBoxOptions: any;
-
-  phoneOptions: any[] = [];
-
-  addPhoneButtonOptions: any;
+  fieldTypeList: FieldTypeList;
 
   columnCount: number = 1;
 
   constructor(service: Service) {
     this.employee = service.getEmployee();
     this.formColumn = service.getFormColumn();
-
-    this.isHomeAddressVisible = true;
-
-    this.phoneOptions = this.getPhonesOptions(this.employee.Phones);
+    this.fieldTypeList = service.getFieldTypeList();
     this.columnCount = this.getColumnCount();
-    console.log(this.columnCount)
-    this.checkBoxOptions = {
-      text: 'Show Address',
-      value: true,
-      onValueChanged: (e: any) => {
-        this.isHomeAddressVisible = e.component.option('value');
-      },
-    };
 
-    this.addPhoneButtonOptions = {
-      icon: 'add',
-      text: 'Add phone',
-      onClick: () => {
-        this.employee.Phones.push('');
-        this.phoneOptions = this.getPhonesOptions(this.employee.Phones);
-      },
-    };
   }
 
   ngAfterViewInit(): void {}
-
-  getPhonesOptions(phones: any) {
-    const options = [];
-    for (let i = 0; i < phones.length; i++) {
-      options.push(this.generateNewPhoneOptions(i));
-    }
-    return options;
-  }
 
   getColumnCount(){
     return this.formColumn.Columns.length;
   }
 
-  generateNewPhoneOptions(index: number) {
-    return {
-      mask: '+1 (X00) 000-0000',
-      maskRules: { X: /[01-9]/ },
-      buttons: [{
-        name: 'trash',
-        location: 'after',
-        options: {
-          stylingMode: 'text',
-          icon: 'trash',
-          onClick: () => {
-            this.employee.Phones.splice(index, 1);
-            this.phoneOptions = this.getPhonesOptions(this.employee.Phones);
-          },
-        },
-      }],
-    };
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    console.log(event)
-    if (event.previousContainer === event.container) {
+  drop(event: CdkDragDrop<FormField[]>) {
+    debugger
+    if(event.previousContainer.id == "fields") {
+      copyArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+      if (event.previousContainer.data) {
+        let  fields : ListIteratee<FormField[]> = this.fieldTypeList.Fields;
+        remove(fields, { markDragged : true });
+      }
+      return;
+    }
+    
+    if (event.previousContainer === event.container) {     
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
+    }
+    else{
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex,
       );
-    }
+    }   
+  }
+
+  onFieldExited(event: CdkDragExit<any>) {
+    let itemIndex = event.container._dropListRef.getItemIndex(event.item._dragRef);
+    let deleteCount = 0;
+    let item = {...event.item.data, markDragged: true};
+    
+    this.fieldTypeList.Fields.splice(itemIndex + 1 , deleteCount, item);
+  }
+
+  onFieldEntered(event: CdkDragEnter<any>) {
+    let  fields : ListIteratee<FormField[]> = this.fieldTypeList.Fields;
+    remove(fields, { markDragged : true });
   }
 }
+
+

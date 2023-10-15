@@ -5,10 +5,7 @@ import { PNumberBoxComponent } from './form-items/p-number-box/p-number-box.comp
 
 @NgModule({
   declarations: [
-   
   
-    PTextBoxComponent,
-            PNumberBoxComponent
   ],
   imports: [DynamicFormRoutingModule],
   exports: []

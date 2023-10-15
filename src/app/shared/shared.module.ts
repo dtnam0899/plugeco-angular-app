@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DevExtremeModule } from 'devextreme-angular';
 
 @NgModule({
   declarations: [
     
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    DevExtremeModule,
   ],
-  exports: [CommonModule]
+  exports: [
+    CommonModule
+  ]
 })
 export class AppSharedModule { }
